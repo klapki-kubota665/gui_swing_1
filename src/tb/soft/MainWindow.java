@@ -7,6 +7,9 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Random;
 
 /**
  * klasa główna zawierająca metodę statyczną main
@@ -24,89 +27,83 @@ public class MainWindow extends JFrame {
             }
         });
     }
-
     public MainWindow() throws HeadlessException {
-        this("untitled");
+        this("undefined");
     }
-
     public MainWindow(String title) throws HeadlessException {
         super(title);
+        buildFrame();
+    }
+    protected void buildFrame() {
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(648, 478);
 
-        JPanel contentPane = new JPanel();
+        setBounds(100, 100, 750, 700);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //program ma się zakończyć po zamknięciu tego okna
+        JPanel jPanel = new JPanel(null);
+        setContentPane(jPanel);
 
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+        jPanel.setBackground(Color.GRAY);
 
-        MyPanel panel = new MyPanel();
-        panel.setBounds(10, 11, 569, 353);
-        contentPane.add(panel);
+        JButton runButton = new JButton("Run");
+        JButton cancelButton = new JButton("Cancel");
+        jPanel.add(runButton);
+        jPanel.add(cancelButton);
+        runButton.setBounds(150, 200, 100, 40);
+        cancelButton.setBounds(250, 200, 100, 40);
+        runButton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
 
-        JSlider poziom = new JSlider();
-        poziom.setPaintTicks(true);
-        poziom.setMajorTickSpacing(10);
-        poziom.setBounds(10, 375, 569, 25);
-        poziom.setMinimum(0);
-        poziom.setMaximum(panel.getWidth());
-        poziom.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                if(panel.hasSprajt()) {
-                    panel.sp.setX(poziom.getValue());
-                    panel.repaint();
-                }
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Random rand = new Random();
+                runButton.setBounds(rand.nextInt(750), rand.nextInt(700), 100, 40);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
             }
         });
-        contentPane.add(poziom);
+        cancelButton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-        JSlider pion = new JSlider();
-        pion.setPaintTicks(true);
-        pion.setMajorTickSpacing(10);
-        pion.setOrientation(SwingConstants.VERTICAL);
-        pion.setBounds(600, 11, 25, 353);
-        pion.setMinimum(0);
-        pion.setMaximum(panel.getHeight());
-        pion.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                if(panel.hasSprajt()) {
-                    panel.sp.setY(pion.getMaximum() - pion.getValue());
-                    panel.repaint();
-                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Random rand = new Random();
+                cancelButton.setBounds(rand.nextInt(750), rand.nextInt(700), 100, 40);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
             }
         });
-        contentPane.add(pion);
 
-        JButton pokBtn = new JButton("Ukryj");
-        JButton dodBtn = new JButton("Dodaj");
-
-        pokBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (panel.isRysuj()) {
-                    panel.setRysuj(false);
-                    pokBtn.setText("Pokaż");
-                    pokBtn.setToolTipText("Pokaż rysowany element");
-                } else {
-                    panel.setRysuj(true);
-                    pokBtn.setText("Ukryj");
-                    pokBtn.setToolTipText("Ukryj rysowany element");
-                }
-                panel.repaint();
-            }
-        });
-        pokBtn.setBounds(10, 417, 90, 23);
-        pokBtn.setEnabled(false);
-        contentPane.add(pokBtn);
-
-        dodBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                pokBtn.setEnabled(true);
-                panel.addSprajt(new Pilka(poziom.getValue(), pion.getMaximum() - pion.getValue()));
-                panel.repaint();
-            }
-        });
-        dodBtn.setBounds(105, 417, 90, 23);
-        contentPane.add(dodBtn);
     }
 }
