@@ -74,8 +74,10 @@ public class MainWindow extends JFrame {
         cancelButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Kanwa.i=0;
+                canvas.i=0;
                 runButton.setBounds(10, 400, 100, 40);
+                canvas.repaint();
+                canvas.requestFocusInWindow();
             }
         });
 

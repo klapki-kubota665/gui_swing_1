@@ -7,8 +7,8 @@ import java.awt.event.*;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
-public class Kanwa extends JPanel implements MouseInputListener, KeyListener {
-    public static int i;
+public class Kanwa extends JPanel implements MouseInputListener, KeyListener, MouseMotionListener {
+    public int i;
     public int x;
     public int y;
     public Kanwa(){
@@ -16,6 +16,7 @@ public class Kanwa extends JPanel implements MouseInputListener, KeyListener {
         setFocusable(true);
         addKeyListener(this);
         addMouseListener(this);
+        addMouseMotionListener(this);
 
     }
     @Override
@@ -23,16 +24,15 @@ public class Kanwa extends JPanel implements MouseInputListener, KeyListener {
         super.paintComponent(g);
         if(i==2) {
             g.setColor(Color.RED);
-            g.drawOval(20, 20, 20, 20);
-            g.fillOval(20, 20, 20, 20);
+            g.drawOval(x ,y , 20, 20);
+            g.fillOval(x, y, 20, 20);
         }
         if(i==1){
             g.setColor(Color.MAGENTA);
-            g.drawRect(20, 20, 20, 20);
-            g.fillRect(20, 20, 20, 20);
+            g.drawRect(x,y, 20, 20);
+            g.fillRect(x, y, 20, 20);
         }
     }
-
     @Override
     public void mouseClicked(MouseEvent e) {
 
